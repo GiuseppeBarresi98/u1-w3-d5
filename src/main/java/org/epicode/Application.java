@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class Application {
 
@@ -46,8 +47,16 @@ public class Application {
         Utente utente1 = new Utente("Giuseppe","Barresi", LocalDate.of(1998,7,5));
         utenteDAO.saveUser(utente1);
 
-        Prestito prestito1 = new Prestito(utente1,rivista4,LocalDate.of(2024,1,10),LocalDate.of(2024,1,30),LocalDate.of(2024,2,5));
+        Prestito prestito1 = new Prestito(utente1,rivista4,LocalDate.of(2024,1,10),LocalDate.of(2024,1,30));
+        Prestito prestito2 = new Prestito(utente1,libro1,LocalDate.of(2024,1,10),LocalDate.of(2024,1,30));
+        Prestito prestito3 = new Prestito(utente1,libro2,LocalDate.of(2024,1,10),LocalDate.of(2024,1,30));
+        prestito3.setGetDataRestituzioneEffettiva(LocalDate.of(2024,2,10));
+
+        prestitoDAO.saveLoan(prestito2);
+        prestitoDAO.saveLoan(prestito3);
         prestitoDAO.saveLoan(prestito1);
+
+        System.out.println(prestitoDAO.loanForUser(UUID.fromString("a28272fa-ec93-4b3e-b88c-eae0ab062b94")));
 
     }
 }
